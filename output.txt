@@ -1,0 +1,123 @@
+pure:
+    Suite: SUITE
+    Test: toyTestCase ...
+    Generating 5-dimension point dataset, number of points in dataset = 20
+    Time cost: 0.0001s
+    passed
+    Test: testcase1 ...
+    Generating 4-dimension point dataset, number of points in dataset = 102400
+    Time cost: 3.2450s
+    passed
+    Test: testcase2 ...
+    Generating 3-dimension point dataset, number of points in dataset = 512000
+    Time cost: 19.0474s
+    passed
+    Test: testcase3 ...
+    Generating 5-dimension point dataset, number of points in dataset = 102400
+    Time cost: 7.9017s
+    passed
+    Test: testcase4 ...
+    Generating 4-dimension point dataset, number of points in dataset = 512000
+    Time cost: 49.1559s
+    passed
+    Test: testcase5 ...
+    Generating 4-dimension point dataset, number of points in dataset = 512000
+    Time cost: 48.9059s
+    passed
+    Test: testcase6 ...
+    Generating 3-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 36.8994s
+    passed
+    Test: testcase7 ...
+    Generating 5-dimension point dataset, number of points in dataset = 512000
+    Time cost: 74.4235s
+    passed
+    Test: testcase8 ...
+    Generating 4-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 54.0456s
+    passed
+    Test: testcase9 ...
+    Generating 4-dimension point dataset, number of points in dataset = 512000
+    Time cost: 22.1799s
+    passed
+    Test: testcase10 ...
+    Generating 5-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 185.4693s
+    passed
+    Test: testcase11 ...
+    Generating 4-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 115.7279s
+    passed
+    Test: testcase12 ...
+    Generating 5-dimension point dataset, number of points in dataset = 512000
+    Time cost: 267.9307s
+    passed
+
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                suites      1      1    n/a      0        0
+                tests     13     13     13      0        0
+                asserts     13     13     13      0      n/a
+
+    Elapsed time =  896.330 seconds
+
+version1:
+    Suite: SUITE
+    Test: toyTestCase ...
+    Generating 5-dimension point dataset, number of points in dataset = 20
+    Time cost: 0.0005s
+    passed
+    Test: testcase1 ...
+    Generating 4-dimension point dataset, number of points in dataset = 102400
+    Time cost: 2.5248s
+    passed
+    Test: testcase2 ...
+    Generating 3-dimension point dataset, number of points in dataset = 512000
+    Time cost: 3.9773s
+    passed
+    Test: testcase3 ...
+    Generating 5-dimension point dataset, number of points in dataset = 102400
+    Time cost: 4.7989s
+    passed
+    Test: testcase4 ...
+    Generating 4-dimension point dataset, number of points in dataset = 512000
+    Time cost: 22.4264s
+    passed
+    Test: testcase5 ...
+    Generating 4-dimension point dataset, number of points in dataset = 512000
+    Time cost: 60.6604s
+    passed
+    Test: testcase6 ...
+    Generating 3-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 5.9214s
+    passed
+    Test: testcase7 ...
+    Generating 5-dimension point dataset, number of points in dataset = 512000
+    Time cost: 40.7572s
+    passed
+    Test: testcase8 ...
+    Generating 4-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 22.1853s
+    passed
+    Test: testcase9 ...
+    Generating 4-dimension point dataset, number of points in dataset = 512000
+    Time cost: 7.8911s
+    passed
+    Test: testcase10 ...
+    Generating 5-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 82.0267s
+    passed
+    Test: testcase11 ...
+    Generating 4-dimension point dataset, number of points in dataset = 1024000
+    Time cost: 51.3927s
+    passed
+    Test: testcase12 ...
+    Generating 5-dimension point dataset, number of points in dataset = 512000
+    Time cost: 118.5552s
+    passed
+
+    Run Summary:    Type  Total    Ran Passed Failed Inactive
+                suites      1      1    n/a      0        0
+                tests     13     13     13      0        0
+                asserts     13     13     13      0      n/a
+
+    Elapsed time = 1407.540 seconds
