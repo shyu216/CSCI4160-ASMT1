@@ -31,112 +31,110 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	omp_set_num_threads(thread_number);
 
 	// (1) preparation
+	long long c = 0;
+	int stkptr = 0;
+	int goahead = 1, goback = 2;
 	int *stack = (int *)malloc(sizeof(int) * number);
 	int *target = (int *)malloc(sizeof(int) * number);
+#pragma omp simd
+	for (int i = 0; i < number; i++)
+	{
+		target[i] = 1;
+	}
 
 	// (2) stack
-	int stkptr = 0;
 	stack[stkptr] = 0;
-	target[stkptr] = 1;
-#pragma omp parallel for shared(stkptr, stack, target)
-	for (int goahead = 1; goahead < number; goahead++)
+	while (stack[stkptr] + goahead < number)
 	{
+		c++;
 		int smaller = 0;
 		int larger = 0;
 #pragma omp simd reduction(+ \
 						   : smaller)
 		for (int cmp = 0; cmp < dim; cmp++)
 		{
-			smaller += points[stack[stkptr]].values[cmp] > points[goahead].values[cmp];
+			smaller += points[stack[stkptr]].values[cmp] > points[stack[stkptr] + goahead].values[cmp];
 		}
 #pragma omp simd reduction(+ \
 						   : larger)
 		for (int cmp = 0; cmp < dim; cmp++)
 		{
-			larger += points[stack[stkptr]].values[cmp] < points[goahead].values[cmp];
+			larger += points[stack[stkptr]].values[cmp] < points[stack[stkptr] + goahead].values[cmp];
 		}
-#pragma omp critical
+		if (smaller && larger)
 		{
-#pragma omp parallel
-			{
-#pragma omp single
-				{
-#pragma omp task
-					if (smaller && larger)
-					{
-						target[goahead] = 1;
-						stack[++stkptr] = goahead;
-					}
-#pragma omp task
-					if (smaller && !larger)
-					{
-						target[stack[stkptr]] = 0;
-						target[goahead] = 1;
-						stack[stkptr] = goahead;
-					}
-#pragma omp task
-					if (larger && !smaller)
-					{
-						target[goahead] = 0;
-					}
-#pragma omp task
-					if (!smaller && !larger)
-					{
-						target[goahead] = 1;
-						stack[++stkptr] = goahead;
-					}
-				}
-			}
+			// printf("add %d to stack\n", stack[stkptr ] + goahead);
+			stkptr++;
+			stack[stkptr] = stack[stkptr - 1] + goahead;
+
+			goahead = 1;
+		}
+		else if (smaller)
+		{
+			// printf("switch %d to %d\n", stack[stkptr ], stack[stkptr ] + goahead);
+			target[stack[stkptr]] = 0;
+			stack[stkptr] += goahead;
+			goahead = 1;
+		}
+		else if (larger)
+		{
+			// printf("%d is gone because %d\n", stack[stkptr - 1] + goahead, stack[stkptr - 1]);
+			target[stack[stkptr] + goahead] = 0;
+			goahead++;
 		}
 	}
 
 	while (stkptr)
 	{
-		if (target[stack[stkptr]])
+		c++;
+		if (stkptr - goback < 0)
 		{
-#pragma omp parallel for shared(stkptr, stack, target)
-			for (int goback = stkptr - 1; goback >= 0; goback--)
-			{
-				if (target[stack[goback]])
-				{
-					int smaller = 0;
-					int larger = 0;
+			stkptr--;
+			goback = 2;
+		}
+		else if (target[stack[stkptr - goback]])
+		{
+			int smaller = 0;
+			int larger = 0;
 #pragma omp simd reduction(+ \
 						   : smaller)
-					for (int cmp = 0; cmp < dim; cmp++)
-					{
-						smaller += points[stack[stkptr]].values[cmp] > points[stack[goback]].values[cmp];
-					}
+			for (int cmp = 0; cmp < dim; cmp++)
+			{
+				smaller += points[stack[stkptr - 1]].values[cmp] > points[stack[stkptr - goback]].values[cmp];
+			}
 #pragma omp simd reduction(+ \
 						   : larger)
-					for (int cmp = 0; cmp < dim; cmp++)
-					{
-						larger += points[stack[stkptr]].values[cmp] < points[stack[goback]].values[cmp];
-					}
-#pragma omp critical
-					{
-#pragma omp parallel
-						{
-#pragma omp single
-							{
-#pragma omp task
-								if (smaller && !larger)
-								{
-									target[stack[stkptr]] = 0;
-								}
-#pragma omp task
-								if (larger && !smaller)
-								{
-									target[stack[goback]] = 0;
-								}
-							}
-						}
-					}
-				}
+			for (int cmp = 0; cmp < dim; cmp++)
+			{
+				larger += points[stack[stkptr - 1]].values[cmp] < points[stack[stkptr - goback]].values[cmp];
+			}
+			if (smaller && larger)
+			{
+				// printf("goback\n");
+				goback++;
+			}
+			else if (smaller)
+			{
+				// printf("%d is gone because %d\n", stack[stkptr - 1], stack[stkptr - goback]);
+				target[stack[stkptr - 1]] = 0;
+				stkptr--;
+				goback = 2;
+			}
+			else if (larger)
+			{
+				// printf("%d is gone because %d\n", stack[stkptr - goback], stack[stkptr - 1]);
+				target[stack[stkptr - goback]] = 0;
+				// stack[stkptr - goback] = stack[stkptr - 1];
+				// stkptr--;
+				goback++;
 			}
 		}
-		stkptr--;
+		else
+		{
+			goback++;
+		}
 	}
+	printf("operation %lld\n", c);
 
 	// (3) generate answer
 	permissiblePoints = (Point *)malloc(sizeof(Point) * number);
