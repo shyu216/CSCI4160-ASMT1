@@ -21,100 +21,121 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 
 	// the following for-loop iterates the first 20 points that will be inputted by runtest.c
 	// for (int i = 0; i < 20; i++)
-	// //printPoint(points[i], dim);
+	// // printPoint(points[i], dim);
 
 	/**********************************************************************************
 	 * Work here
 	 * *******************************************************************************/
-	// idea:
-	// (1) loop find most permissible in each dim
-	// (2) loop find not privail
-	// (3) loop generate output
+	// idea: stack
 
 	omp_set_num_threads(thread_number);
 
-	// (1) initialize target array
-	int target_min = 0;
+	// (1) preparation
+	int *stack = (int *)malloc(sizeof(int) * number);
 	int *target = (int *)malloc(sizeof(int) * number);
-#pragma omp simd
-	for (int i = 0; i < number; i++)
-	{
-		target[i] = 1;
-	}
 
-	// (2) loop find min
-	for (int find_min = 1; find_min < number; find_min++)
+	// (2) stack
+	int stkptr = 0;
+	stack[stkptr] = 0;
+	target[stkptr] = 1;
+#pragma omp parallel for shared(stkptr, stack, target)
+	for (int goahead = 1; goahead < number; goahead++)
 	{
-		printf("cmp min to %d: ", find_min);
 		int smaller = 0;
 		int larger = 0;
+#pragma omp simd reduction(+ \
+						   : smaller)
 		for (int cmp = 0; cmp < dim; cmp++)
 		{
-			if (points[target_min].values[cmp] > points[find_min].values[cmp])
+			smaller += points[stack[stkptr]].values[cmp] > points[goahead].values[cmp];
+		}
+#pragma omp simd reduction(+ \
+						   : larger)
+		for (int cmp = 0; cmp < dim; cmp++)
+		{
+			larger += points[stack[stkptr]].values[cmp] < points[goahead].values[cmp];
+		}
+#pragma omp critical
+		{
+#pragma omp parallel
 			{
-				smaller++;
-				printf("s ");
+#pragma omp single
+				{
+#pragma omp task
+					if (smaller && larger)
+					{
+						target[goahead] = 1;
+						stack[++stkptr] = goahead;
+					}
+#pragma omp task
+					if (smaller && !larger)
+					{
+						target[stack[stkptr]] = 0;
+						target[goahead] = 1;
+						stack[stkptr] = goahead;
+					}
+#pragma omp task
+					if (larger && !smaller)
+					{
+						target[goahead] = 0;
+					}
+#pragma omp task
+					if (!smaller && !larger)
+					{
+						target[goahead] = 1;
+						stack[++stkptr] = goahead;
+					}
+				}
 			}
-			if (points[target_min].values[cmp] < points[find_min].values[cmp])
-			{
-				larger++;
-				printf("l ");
-			}
-		}
-		printf("\n");
-		if (smaller && larger)
-		{
-			continue;
-		}
-		else if (smaller)
-		{
-			target[target_min] = 0;
-			target_min = find_min;
-		}
-		else if (larger)
-		{
-			target[find_min] = 0;
 		}
 	}
 
-	// (3) loop find target
-	for (int find_target = 0; find_target < number; find_target++)
+	while (stkptr)
 	{
-		if (target[find_target])
+		if (target[stack[stkptr]])
 		{
-			printf("cmp min to %d: ", find_target);
-			int smaller = 0;
-			int larger = 0;
-			for (int cmp = 0; cmp < dim; cmp++)
+#pragma omp parallel for shared(stkptr, stack, target)
+			for (int goback = stkptr - 1; goback >= 0; goback--)
 			{
-				if (points[target_min].values[cmp] > points[find_target].values[cmp])
+				if (target[stack[goback]])
 				{
-					smaller++;
-					printf("s ");
+					int smaller = 0;
+					int larger = 0;
+#pragma omp simd reduction(+ \
+						   : smaller)
+					for (int cmp = 0; cmp < dim; cmp++)
+					{
+						smaller += points[stack[stkptr]].values[cmp] > points[stack[goback]].values[cmp];
+					}
+#pragma omp simd reduction(+ \
+						   : larger)
+					for (int cmp = 0; cmp < dim; cmp++)
+					{
+						larger += points[stack[stkptr]].values[cmp] < points[stack[goback]].values[cmp];
+					}
+#pragma omp critical
+					{
+#pragma omp parallel
+						{
+#pragma omp single
+							{
+#pragma omp task
+								if (smaller && !larger)
+								{
+									target[stack[stkptr]] = 0;
+								}
+#pragma omp task
+								if (larger && !smaller)
+								{
+									target[stack[goback]] = 0;
+								}
+							}
+						}
+					}
 				}
-				if (points[target_min].values[cmp] < points[find_target].values[cmp])
-				{
-					larger++;
-					printf("l ");
-				}
-			}
-			printf("\n");
-			if (smaller && larger)
-			{
-				continue;
-			}
-			else if (smaller)
-			{
-				if (target_min != find_target)
-					printf("\n\n\n****************error!!*****************\n\n\n");
-					else
-						printf("\n\n\n*************no error!!!************\n\n\n");
-			}
-			else if (larger)
-			{
-				target[find_target] = 0;
 			}
 		}
+		stkptr--;
 	}
 
 	// (3) generate answer
@@ -126,13 +147,14 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 		if (target[writer])
 		{
 			permissiblePoints[permissiblePointNum] = points[writer];
-			printPoint(permissiblePoints[permissiblePointNum], dim);
+			// printPoint(permissiblePoints[permissiblePointNum], dim);
 			permissiblePointNum++;
 		}
 	}
-	printf("permissiblePointNum: %d\n", permissiblePointNum);
+	// printf("permissiblePointNum: %d\n", permissiblePointNum);
 
 	free(target);
+	free(stack);
 
 	// pPermissiblePoints -- your computed answer
 	*pPermissiblePoints = permissiblePoints;
