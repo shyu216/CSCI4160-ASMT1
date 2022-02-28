@@ -19,140 +19,126 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	int permissiblePointNum = 0;
 	Point *permissiblePoints = NULL;
 
-	// the following for-loop iterates the first 20 points that will be inputted by runtest.c
+	// the following for-loop iterates the first 20 points that will be inputted by runtest.compare
 	// for (int i = 0; i < 20; i++)
 	// // printPoint(points[i], dim);
 
 	/**********************************************************************************
 	 * Work here
 	 * *******************************************************************************/
-	// idea: stack
+	// idea: map
 
 	omp_set_num_threads(thread_number);
 
 	// (1) preparation
-	long long c = 0;
-	int stkptr = 0;
-	int goahead = 1, goback = 2;
-	int *stack = (int *)malloc(sizeof(int) * number);
+	long long compare = 0, condi = 0;
+	int head = 0, tail = 0;
+	int mptr = 0;
 	int *target = (int *)malloc(sizeof(int) * number);
+	int *map = (int *)malloc(sizeof(int) * number);
 #pragma omp simd
-	for (int i = 0; i < number; i++)
+	for (int i = 0; i < number; ++i)
 	{
-		target[i] = 1;
+		target[i] = 0;
 	}
-
-	// (2) stack
-	stack[stkptr] = 0;
-	while (stack[stkptr] + goahead < number)
+#pragma omp simd
+	for (int i = 0; i < number; ++i)
 	{
-		c++;
-		int smaller = 0;
-		int larger = 0;
-#pragma omp simd reduction(+ \
-						   : smaller)
-		for (int cmp = 0; cmp < dim; cmp++)
-		{
-			smaller += points[stack[stkptr]].values[cmp] > points[stack[stkptr] + goahead].values[cmp];
-		}
-#pragma omp simd reduction(+ \
-						   : larger)
-		for (int cmp = 0; cmp < dim; cmp++)
-		{
-			larger += points[stack[stkptr]].values[cmp] < points[stack[stkptr] + goahead].values[cmp];
-		}
-		if (smaller && larger)
-		{
-			// printf("add %d to stack\n", stack[stkptr ] + goahead);
-			stkptr++;
-			stack[stkptr] = stack[stkptr - 1] + goahead;
-
-			goahead = 1;
-		}
-		else if (smaller)
-		{
-			// printf("switch %d to %d\n", stack[stkptr ], stack[stkptr ] + goahead);
-			target[stack[stkptr]] = 0;
-			stack[stkptr] += goahead;
-			goahead = 1;
-		}
-		else if (larger)
-		{
-			// printf("%d is gone because %d\n", stack[stkptr - 1] + goahead, stack[stkptr - 1]);
-			target[stack[stkptr] + goahead] = 0;
-			goahead++;
-		}
+		map[i] = 1;
 	}
-
-	while (stkptr)
-	{
-		c++;
-		if (stkptr - goback < 0)
-		{
-			stkptr--;
-			goback = 2;
-		}
-		else if (target[stack[stkptr - goback]])
-		{
-			int smaller = 0;
-			int larger = 0;
-#pragma omp simd reduction(+ \
-						   : smaller)
-			for (int cmp = 0; cmp < dim; cmp++)
-			{
-				smaller += points[stack[stkptr - 1]].values[cmp] > points[stack[stkptr - goback]].values[cmp];
-			}
-#pragma omp simd reduction(+ \
-						   : larger)
-			for (int cmp = 0; cmp < dim; cmp++)
-			{
-				larger += points[stack[stkptr - 1]].values[cmp] < points[stack[stkptr - goback]].values[cmp];
-			}
-			if (smaller && larger)
-			{
-				// printf("goback\n");
-				goback++;
-			}
-			else if (smaller)
-			{
-				// printf("%d is gone because %d\n", stack[stkptr - 1], stack[stkptr - goback]);
-				target[stack[stkptr - 1]] = 0;
-				stkptr--;
-				goback = 2;
-			}
-			else if (larger)
-			{
-				// printf("%d is gone because %d\n", stack[stkptr - goback], stack[stkptr - 1]);
-				target[stack[stkptr - goback]] = 0;
-				// stack[stkptr - goback] = stack[stkptr - 1];
-				// stkptr--;
-				goback++;
-			}
-		}
-		else
-		{
-			goback++;
-		}
-	}
-	printf("operation %lld\n", c);
-
-	// (3) generate answer
 	permissiblePoints = (Point *)malloc(sizeof(Point) * number);
-	int writer = 0;
 
-	for (writer = 0; writer < number; writer++)
+	do
 	{
-		if (target[writer])
+		// (2) target
+		for (int i = 0; i < dim; ++i)
 		{
-			permissiblePoints[permissiblePointNum] = points[writer];
-			// printPoint(permissiblePoints[permissiblePointNum], dim);
-			permissiblePointNum++;
+#pragma omp parallel for
+			for (int j = 0; j < number; ++j)
+			{
+				if (map[j])
+				{
+					if (points[j].values[i] == points[target[tail]].values[i])
+					{
+						++tail;
+						target[tail] = j;
+						// printPoint(points[j], dim);
+					}
+					else if (points[j].values[i] < points[target[tail]].values[i])
+					{
+						tail = head;
+						target[tail] = j;
+						// printPoint(points[j], dim);
+					}
+				}
+			}
+			++tail;
+			head = tail;
 		}
-	}
-	// printf("permissiblePointNum: %d\n", permissiblePointNum);
+		printf("tail is %d ", tail);
+
+		// (3) map
+		for (int i = 0; i < tail; ++i)
+		{
+#pragma omp parallel for
+			for (int j = 0; j < number; ++j)
+			{
+				if (map[j])
+				{
+					int better = 0;
+					int worse = 0;
+					int ptr;
+#pragma omp simd reduction(+ \
+						   : worse)
+					for (ptr = 0; ptr < dim; ptr++)
+					{
+						worse += points[j].values[ptr] >= points[target[i]].values[ptr];
+					}
+#pragma omp simd reduction(+ \
+						   : better)
+					for (ptr = 0; ptr < dim; ptr++)
+					{
+						better += points[j].values[ptr] <= points[target[i]].values[ptr];
+					}
+					if (worse == dim && better < dim)
+					{
+						map[j] = 0;
+						++mptr;
+						// printf("byebye ");
+						// printPoint(points[j], dim);
+					}
+					++condi;
+				}
+				++compare;
+			}
+			// printf("tail %d, target %d\n", i, target[i]);
+		}
+		printf("compare is %lld, condi is %lld, mptr is %d\n", compare, condi, mptr);
+
+		// (3) generate answer
+		for (int i = 0; i < tail; i++)
+		{
+			if (map[target[i]])
+			{
+				permissiblePoints[permissiblePointNum] = points[target[i]];
+				// printPoint(permissiblePoints[permissiblePointNum], dim);
+				permissiblePointNum++;
+				map[target[i]] = 0;
+				++mptr;
+				// printf("byebye ");
+				// printPoint(points[target[i]], dim);
+			}
+			target[i] = 0;
+		}
+
+		head = 0;
+		tail = 0;
+		// printf("permissiblePointNum: %d\n", permissiblePointNum);
+	} while (mptr < number);
 
 	free(target);
-	free(stack);
+	free(map);
+	printf("compare is %lld\n", compare);
 
 	// pPermissiblePoints -- your computed answer
 	*pPermissiblePoints = permissiblePoints;
