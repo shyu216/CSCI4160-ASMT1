@@ -19,13 +19,16 @@ then
 scancel (your jobid)
 ```
 
+## roofline
+
+export PATH=$PATH:/opt/intel/advisor/bin64/
+advixe-cl -collect roofline -project-dir ./result -- ./runtest  
+
 # pp result
 ```powershell
-Suite: SUITE
-  Test: testcase12 ...
-Generating 5-dimension point dataset, number of points in dataset = 512000
-c is 9798329496
-Time cost: 97.4947s
+    Test: testcase12 ...
+cmp gap is 262144 condi is 38093261676, cmp is 11550475000
+Time cost: 97.2421s
 passed
 
 Run Summary:    Type  Total    Ran Passed Failed Inactive
@@ -33,6 +36,11 @@ Run Summary:    Type  Total    Ran Passed Failed Inactive
                tests     13      1      1      0        0
              asserts      1      1      1      0      n/a
 
-Elapsed time =  382.709 seconds
-root@30a5a3b18a6b:/tmp#
+Elapsed time =  377.650 seconds
+```
+```
+tail is 5 compare is 39514624000, condi is 12105431878, mptr is 511690
+```
+```
+tail is 5 compare is 39514624000, condi is 12105448130, mptr is 511697
 ```

@@ -20,7 +20,7 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	int permissiblePointNum = 0;
 	Point *permissiblePoints = NULL;
 
-	// the following for-loop iterates the first 20 points that will be inputted by runtest.c
+	// the following for-loop iterates the first 20 points that will be inputted by runtest.compare
 	// for (int i = 0; i < 20; i++)
 	// //printPoint(points[i], dim);
 
@@ -29,7 +29,8 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	 * *******************************************************************************/
 
 	// (1) preparation
-	long long c = 0;
+	long long compare = 0, condi = 0;
+	int drop = 0;
 	omp_set_num_threads(thread_number);
 	int jump_gap, jump_time, uncmp_num = number;
 	int *target = (int *)malloc(sizeof(int) * number);
@@ -42,14 +43,18 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	// (2) loop
 	for (int cmp_gap = 1; cmp_gap < number; cmp_gap *= 2)
 	{
+		printf("gap %d, ", cmp_gap);
 		jump_gap = cmp_gap * 2;
 		jump_time = uncmp_num / 2;
 		uncmp_num = jump_time + uncmp_num % 2;
-		// #pragma omp parallel for
+		
+		// #pragma omp parallel for reduction(+ \
+		// 				   : condi, compare, drop)
 		for (int jump = 0; jump < jump_time; jump++)
 		{
 			int condition = jump * jump_gap + cmp_gap < number ? jump * jump_gap + cmp_gap : number;
-#pragma omp parallel for
+			#pragma omp parallel for reduction(+ \
+						   : condi, compare, drop)
 			for (int former_ptr = jump * jump_gap; former_ptr < condition; former_ptr++)
 			{
 				// printf("%d here out of %d\n", omp_get_thread_num(), omp_get_num_threads());
@@ -89,8 +94,9 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 								write_list++;
 								// printf("%d gone\n", latter_ptr);
 							}
+							++compare;
 						}
-						++c;
+						++condi;
 					}
 					for (int i = 0; i < write_list; i++)
 					{
@@ -100,6 +106,8 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 				}
 			}
 		}
+		// printf("drop %d, ", drop);
+		printf("condi %lld, cmp %lld\n", condi, compare);
 	}
 
 	// (3) generate answer
@@ -117,9 +125,8 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 			}
 		}
 	}
-	// printf("%d\n", permissiblePointNum);
+	printf("%d added\n", permissiblePointNum);
 	free(target);
-	printf("c is %lld\n", c);
 
 	// pPermissiblePoints -- your computed answer
 	*pPermissiblePoints = permissiblePoints;

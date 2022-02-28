@@ -1,0 +1,5 @@
+# callstacks file version: 5
+#    rowid	    parent	       rva	 loop	 system	                                function	binary	instance_start_rva	instance_size	instance_end_rva	finst_rowid	roi	is_inlined
+         1	        -1	     17181	    0	      0	                           func@0x40431d	/usr/bin/make	17181	51	0	3	0	0
+         2	        -1	     17181	    0	      0	                           func@0x40431d	/usr/bin/make	17181	51	0	3	0	0
+         3	        -1	         0	    0	      0	                [Unknown stack frame(s)]	n/a	0	1	0	388	0	0

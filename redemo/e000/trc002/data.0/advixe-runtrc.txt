@@ -1,0 +1,10 @@
+
+=== Start: [2022/02/28 14:11:45] === 
+Peak bandwidth measurement started...
+Peak bandwidth measurement finished.
+Analysis started...
+Result file: /data/d0/y20/shyu0/CSCI4160/csci4160-asgn1a-aoiue/redemo/e000/trc002/trc002.advixe 
+Application exit code: 0 
+Result file: /data/d0/y20/shyu0/CSCI4160/csci4160-asgn1a-aoiue/redemo/e000/trc002/trc002.advixe 
+Analysis completed
+=== End: [2022/02/28 14:12:49] === 

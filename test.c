@@ -5,5 +5,11 @@
 
 void main(){
     int i = 0;
-    printf("%d", ++i);
+
+    printf("%d\n", i++);//0
+    int j = 0;
+    if(i==0|(++j) ==1){
+        j++;
+    }
+    printf("%d", j);
 }
