@@ -30,7 +30,6 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 
 	// (1) preparation
 	long long compare = 0, condi = 0;
-	int drop = 0;
 	omp_set_num_threads(thread_number);
 	int jump_gap, jump_time, uncmp_num = number;
 	int *target = (int *)malloc(sizeof(int) * number);
@@ -47,14 +46,13 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 		jump_gap = cmp_gap * 2;
 		jump_time = uncmp_num / 2;
 		uncmp_num = jump_time + uncmp_num % 2;
-		
-		// #pragma omp parallel for reduction(+ \
-		// 				   : condi, compare, drop)
+
+#pragma omp parallel
 		for (int jump = 0; jump < jump_time; jump++)
 		{
 			int condition = jump * jump_gap + cmp_gap < number ? jump * jump_gap + cmp_gap : number;
-			#pragma omp parallel for reduction(+ \
-						   : condi, compare, drop)
+
+#pragma omp for
 			for (int former_ptr = jump * jump_gap; former_ptr < condition; former_ptr++)
 			{
 				// printf("%d here out of %d\n", omp_get_thread_num(), omp_get_num_threads());
@@ -63,6 +61,7 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 					int write_list = 0;
 					int *target_list = (int *)malloc(sizeof(int) * cmp_gap);
 					int condition2 = condition + cmp_gap < number ? condition + cmp_gap : number;
+					
 					for (int latter_ptr = condition; latter_ptr < condition2; latter_ptr++)
 					{
 						if (target[latter_ptr])
@@ -92,7 +91,6 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 								target_list[write_list] = latter_ptr;
 								// printf("%d is gone because of %d\n", latter_ptr, former_ptr);
 								write_list++;
-								// printf("%d gone\n", latter_ptr);
 							}
 							++compare;
 						}
@@ -106,7 +104,6 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 				}
 			}
 		}
-		// printf("drop %d, ", drop);
 		printf("condi %lld, cmp %lld\n", condi, compare);
 	}
 

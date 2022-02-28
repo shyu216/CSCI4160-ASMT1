@@ -38,6 +38,10 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	int *target = (int *)malloc(sizeof(int) * number);
 	int *map = (int *)malloc(sizeof(int) * number);
 	int loop = 1;
+	for (int i = 0; i < dim; ++i)
+	{
+		flag[i] = 0;
+	}
 	for (int i = 0; i < number; ++i)
 	{
 		target[i] = 0;
@@ -45,10 +49,6 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 	for (int i = 0; i < number; ++i)
 	{
 		map[i] = 1;
-	}
-	for (int i = 0; i < number; ++i)
-	{
-		flag[i] = 0;
 	}
 
 	while (loop)
@@ -93,7 +93,6 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 			++tail;
 			head = tail;
 		}
-		printf("tail %d, ", tail);
 
 		// (3) map
 		for (int i = 0; i < tail; ++i)
@@ -119,13 +118,13 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 						{
 							map[j] = 0;
 						}
-						++ifcondition;
+						 ++ifcondition;
 					}
-					++compare;
+					 ++compare;
 				}
 			}
 		}
-		printf("cmp %lld, if %lld\n", compare, ifcondition);
+		 
 
 		// (3) generate answer
 		for (int i = 0; i < tail; i++)
@@ -141,10 +140,10 @@ int asgn1a(Point *points, Point **pPermissiblePoints, int number, int dim, int t
 
 		head = 0;
 		tail = 0;
-		// printf("permissiblePointNum: %d\n", permissiblePointNum);
 	}
 
-	printf("%d added\n", permissiblePointNum);
+printf("count of cmp %lld, ount of if %lld\n", compare, ifcondition);
+	printf("total added %d \n", permissiblePointNum);
 	free(target);
 	free(map);
 	free(flag);
