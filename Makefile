@@ -7,6 +7,13 @@ all: runtest.c util.c asgn1a.c WjCryptLib/WjCryptLib_Rc4.c
 clean:
 	rm -rf runtest
 
-pp: runtest.c util.c pp.c WjCryptLib/WjCryptLib_Rc4.c
+binary: runtest.c util.c binary.c WjCryptLib/WjCryptLib_Rc4.c
 	gcc $^ -o runcmp $(INC) $(LIB) $(SIMD) -lcunit -pthread -fopenmp -std=c99 -O3
 
+
+skyline: runtest.c util.c skyline.c WjCryptLib/WjCryptLib_Rc4.c
+	gcc $^ -o runcmp $(INC) $(LIB) $(SIMD) -lcunit -pthread -fopenmp -std=c99 -O3
+
+
+flipskyline: runtest.c util.c flipskyline.c WjCryptLib/WjCryptLib_Rc4.c
+	gcc $^ -o runcmp $(INC) $(LIB) $(SIMD) -lcunit -pthread -fopenmp -std=c99 -O3
