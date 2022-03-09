@@ -1,2 +1,0 @@
-161756 : ERROR : Valid __errno_location symbol is not found in the binary of the analysis target. 
-161756 : ERROR : Binary file of the analysis target does not contain symbols required for profiling. See the 'Analyzing Statically Linked Binaries' help topic for more details. 
