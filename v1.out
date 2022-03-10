@@ -1,0 +1,312 @@
+Type '0' to run a toy testcase; Type a number of '1'~'12' to select a testcase; Type '13' to run all the 13 testcases: 
+
+     CUnit - A unit testing framework for C - Version 2.1-3
+     http://cunit.sourceforge.net/
+
+
+Suite: SUITE
+  Test: toyTestCase ...
+Generating 5-dimension point dataset, number of points in dataset = 20
+gap 1, condi 10, cmp 10
+gap 2, condi 30, cmp 30
+gap 4, condi 62, cmp 62
+gap 8, condi 118, cmp 118
+gap 16, condi 178, cmp 178
+18 added
+Time cost: 0.0001s
+passed
+  Test: testcase1 ...
+Generating 4-dimension point dataset, number of points in dataset = 102400
+gap 1, condi 51200, cmp 51200
+gap 2, condi 153304, cmp 152870
+gap 4, condi 356460, cmp 353414
+gap 8, condi 758348, cmp 743707
+gap 16, condi 1544332, cmp 1484540
+gap 32, condi 3060908, cmp 2839711
+gap 64, condi 5901420, cmp 5179238
+gap 128, condi 11022444, cmp 8902280
+gap 256, condi 19896428, cmp 14379317
+gap 512, condi 34617964, cmp 21686862
+gap 1024, condi 57946732, cmp 30682918
+gap 2048, condi 93848172, cmp 40840330
+gap 4096, condi 143241836, cmp 51036012
+gap 8192, condi 214200940, cmp 61110354
+gap 16384, condi 311767660, cmp 70556746
+gap 32768, condi 404521580, cmp 77074758
+gap 65536, condi 527204972, cmp 83602948
+4025 added
+Time cost: 1.9462s
+passed
+  Test: testcase2 ...
+Generating 3-dimension point dataset, number of points in dataset = 512000
+gap 1, condi 256000, cmp 256000
+gap 2, condi 766104, cmp 763160
+gap 4, condi 1778208, cmp 1758145
+gap 8, condi 3773008, cmp 3675581
+gap 16, condi 7648016, cmp 7249688
+gap 32, condi 14995728, cmp 13549076
+gap 64, condi 28384208, cmp 23724675
+gap 128, condi 51509968, cmp 38364099
+gap 256, condi 88931536, cmp 56912338
+gap 512, condi 145880784, cmp 77673181
+gap 1024, condi 227102416, cmp 98408409
+gap 2048, condi 337573584, cmp 117255987
+gap 4096, condi 482412240, cmp 133060872
+gap 8192, condi 665224912, cmp 145573143
+gap 16384, condi 886396624, cmp 154964017
+gap 32768, condi 1151502032, cmp 161907562
+gap 65536, condi 1475626704, cmp 166749809
+gap 131072, condi 1844438736, cmp 170109295
+gap 262144, condi 2270942928, cmp 172365767
+2043 added
+Time cost: 4.3064s
+passed
+  Test: testcase3 ...
+Generating 5-dimension point dataset, number of points in dataset = 102400
+gap 1, condi 51200, cmp 51200
+gap 2, condi 153502, cmp 153355
+gap 4, condi 357694, cmp 356638
+gap 8, condi 764582, cmp 759553
+gap 16, condi 1572438, cmp 1551475
+gap 32, condi 3166966, cmp 3081911
+gap 64, condi 6275062, cmp 5967864
+gap 128, condi 12229878, cmp 11211291
+gap 256, condi 23391734, cmp 20218725
+gap 512, condi 43589110, cmp 34683482
+gap 1024, condi 78990838, cmp 56511081
+gap 2048, condi 139156982, cmp 87453844
+gap 4096, condi 233610742, cmp 126575251
+gap 8192, condi 382565878, cmp 174560166
+gap 16384, condi 614694390, cmp 230820501
+gap 32768, condi 874253814, cmp 280207118
+gap 65536, condi 1245179382, cmp 338821997
+12761 added
+Time cost: 6.6873s
+passed
+  Test: testcase4 ...
+Generating 4-dimension point dataset, number of points in dataset = 512000
+gap 1, condi 256000, cmp 256000
+gap 2, condi 767702, cmp 767180
+gap 4, condi 1789878, cmp 1786466
+gap 8, condi 3829270, cmp 3812607
+gap 16, condi 7889126, cmp 7817616
+gap 32, condi 15930246, cmp 15642544
+gap 64, condi 31724742, cmp 30627551
+gap 128, condi 62293830, cmp 58332936
+gap 256, condi 120054086, cmp 106887661
+gap 512, condi 225435462, cmp 185845386
+gap 1024, condi 409800518, cmp 303463796
+gap 2048, condi 716148550, cmp 462291858
+gap 4096, condi 1200955206, cmp 656883451
+gap 8192, condi 1936621382, cmp 877820745
+gap 16384, condi 3005120326, cmp 1109866844
+gap 32768, condi 4514692934, cmp 1339768138
+gap 65536, condi 6588182342, cmp 1554644327
+gap 131072, condi 9360236358, cmp 1744218527
+gap 262144, condi 12888702790, cmp 1902338365
+18311 added
+Time cost: 45.3089s
+passed
+  Test: testcase5 ...
+Generating 4-dimension point dataset, number of points in dataset = 512000
+gap 1, condi 256000, cmp 256000
+gap 2, condi 767668, cmp 767212
+gap 4, condi 1789672, cmp 1786323
+gap 8, condi 3828496, cmp 3812469
+gap 16, condi 7886064, cmp 7815168
+gap 32, condi 15929936, cmp 15638887
+gap 64, condi 31715792, cmp 30609683
+gap 128, condi 62271440, cmp 58293102
+gap 256, condi 119957200, cmp 106762053
+gap 512, condi 225245392, cmp 185617678
+gap 1024, condi 409266384, cmp 302743395
+gap 2048, condi 715178192, cmp 460814432
+gap 4096, condi 1199395024, cmp 655217824
+gap 8192, condi 1934758096, cmp 876029998
+gap 16384, condi 2997850320, cmp 1106903355
+gap 32768, condi 4493013200, cmp 1334600605
+gap 65536, condi 6577234128, cmp 1547974845
+gap 131072, condi 9371422928, cmp 1738554145
+gap 262144, condi 12939616464, cmp 1897501113
+18317 added
+Time cost: 45.1766s
+passed
+  Test: testcase6 ...
+Generating 3-dimension point dataset, number of points in dataset = 1024000
+gap 1, condi 512000, cmp 512000
+gap 2, condi 1528750, cmp 1518042
+gap 4, condi 3534942, cmp 3463443
+gap 8, condi 7441414, cmp 7112226
+gap 16, condi 14881414, cmp 13610261
+gap 32, condi 28556422, cmp 24281497
+gap 64, condi 52395718, cmp 39999535
+gap 128, condi 91463878, cmp 60374113
+gap 256, condi 151602886, cmp 83727626
+gap 512, condi 239032006, cmp 107695985
+gap 1024, condi 359938758, cmp 130151915
+gap 2048, condi 519013062, cmp 149471161
+gap 4096, condi 725025478, cmp 165195330
+gap 8192, condi 977756870, cmp 177181527
+gap 16384, condi 1287152326, cmp 186033877
+gap 32768, condi 1648558790, cmp 192277888
+gap 65536, condi 2086331078, cmp 196607832
+gap 131072, condi 2578916038, cmp 199491815
+gap 262144, condi 3149480646, cmp 201342175
+gap 524288, condi 3800105670, cmp 202548834
+1462 added
+Time cost: 5.6260s
+passed
+  Test: testcase7 ...
+Generating 5-dimension point dataset, number of points in dataset = 512000
+gap 1, condi 256000, cmp 256000
+gap 2, condi 767528, cmp 766841
+gap 4, condi 1788728, cmp 1783694
+gap 8, condi 3823272, cmp 3798500
+gap 16, condi 7863496, cmp 7759774
+gap 32, condi 15839720, cmp 15428422
+gap 64, condi 31397224, cmp 29890014
+gap 128, condi 61222504, cmp 56131871
+gap 256, condi 117096040, cmp 101339582
+gap 512, condi 218437224, cmp 174297821
+gap 1024, condi 396369512, cmp 284754884
+gap 2048, condi 698238568, cmp 441179464
+gap 4096, condi 1190807144, cmp 647315563
+gap 8192, condi 1971906152, cmp 902158464
+gap 16384, condi 3164022376, cmp 1198131489
+gap 32768, condi 4935825000, cmp 1523264602
+gap 65536, condi 7512938088, cmp 1864094319
+gap 131072, condi 11151881832, cmp 2203647211
+gap 262144, condi 16097531496, cmp 2520725048
+26929 added
+Time cost: 61.4464s
+passed
+  Test: testcase8 ...
+Generating 4-dimension point dataset, number of points in dataset = 1024000
+gap 1, condi 512000, cmp 512000
+gap 2, condi 1533252, cmp 1528763
+gap 4, condi 3564088, cmp 3533958
+gap 8, condi 7579464, cmp 7436536
+gap 16, condi 15445528, cmp 14857807
+gap 32, condi 30589368, cmp 28415688
+gap 64, condi 58976184, cmp 51752908
+gap 128, condi 110224440, cmp 88975353
+gap 256, condi 198962232, cmp 143387314
+gap 512, condi 345889336, cmp 216146768
+gap 1024, condi 578182712, cmp 305471955
+gap 2048, condi 931771960, cmp 407237721
+gap 4096, condi 1450935864, cmp 514822491
+gap 8192, condi 2188715576, cmp 620725853
+gap 16384, condi 3188696632, cmp 718487557
+gap 32768, condi 4499940920, cmp 803393970
+gap 65536, condi 6201345592, cmp 875390564
+gap 131072, condi 8425596472, cmp 934746235
+gap 262144, condi 11175052856, cmp 982076045
+gap 524288, condi 14608574008, cmp 1018910143
+8473 added
+Time cost: 30.3787s
+passed
+  Test: testcase9 ...
+Generating 4-dimension point dataset, number of points in dataset = 512000
+gap 1, condi 256000, cmp 256000
+gap 2, condi 766476, cmp 764334
+gap 4, condi 1781832, cmp 1766734
+gap 8, condi 3790472, cmp 3717916
+gap 16, condi 7724584, cmp 7427491
+gap 32, condi 15299112, cmp 14209364
+gap 64, condi 29512424, cmp 25901389
+gap 128, condi 55160168, cmp 44534912
+gap 256, condi 99520360, cmp 71773375
+gap 512, condi 173085032, cmp 108304057
+gap 1024, condi 289603944, cmp 153368321
+gap 2048, condi 467620200, cmp 204706592
+gap 4096, condi 725967208, cmp 258458415
+gap 8192, condi 1091805544, cmp 311407385
+gap 16384, condi 1582092648, cmp 359851314
+gap 32768, condi 2228965736, cmp 402234780
+gap 65536, condi 3084558696, cmp 438069345
+gap 131072, condi 4186837352, cmp 467287696
+gap 262144, condi 5539807592, cmp 490278220
+6682 added
+Time cost: 13.1901s
+passed
+  Test: testcase10 ...
+Generating 5-dimension point dataset, number of points in dataset = 1024000
+gap 1, condi 512000, cmp 512000
+gap 2, condi 1535046, cmp 1533678
+gap 4, condi 3577306, cmp 3567215
+gap 8, condi 7646618, cmp 7597681
+gap 16, condi 15727482, cmp 15517551
+gap 32, condi 31669306, cmp 30843980
+gap 64, condi 62771642, cmp 59754982
+gap 128, condi 122437050, cmp 112240140
+gap 256, condi 234171322, cmp 202592519
+gap 512, condi 436685754, cmp 348482303
+gap 1024, condi 791756730, cmp 568892463
+gap 2048, condi 1396611002, cmp 881771156
+gap 4096, condi 2390439866, cmp 1297592937
+gap 8192, condi 3957946298, cmp 1812749232
+gap 16384, condi 6382401466, cmp 2415431904
+gap 32768, condi 9943848890, cmp 3071740997
+gap 65536, condi 15124567994, cmp 3762467980
+gap 131072, condi 22470080442, cmp 4456263008
+gap 262144, condi 32585078714, cmp 5115563015
+gap 524288, condi 46439094202, cmp 5724346606
+37075 added
+Time cost: 154.5471s
+passed
+  Test: testcase11 ...
+Generating 4-dimension point dataset, number of points in dataset = 1024000
+gap 1, condi 512000, cmp 512000
+gap 2, condi 1535380, cmp 1534482
+gap 4, condi 3579616, cmp 3573101
+gap 8, condi 7657944, cmp 7625748
+gap 16, condi 15776168, cmp 15636076
+gap 32, condi 31858408, cmp 31290258
+gap 64, condi 63450472, cmp 61263662
+gap 128, condi 124588648, cmp 116667307
+gap 256, condi 239998056, cmp 213589366
+gap 512, condi 450397288, cmp 371105819
+gap 1024, condi 818190440, cmp 605208418
+gap 2048, condi 1431216232, cmp 922094442
+gap 4096, condi 2406559848, cmp 1313736303
+gap 8192, condi 3878219880, cmp 1754775734
+gap 16384, condi 6032371816, cmp 2217198763
+gap 32768, condi 9003454568, cmp 2665296668
+gap 65536, condi 13088018536, cmp 3080691625
+gap 131072, condi 18518855784, cmp 3444858064
+gap 262144, condi 25521524840, cmp 3746155735
+gap 524288, condi 34574307432, cmp 3987258533
+21838 added
+Time cost: 102.4937s
+passed
+  Test: testcase12 ...
+Generating 5-dimension point dataset, number of points in dataset = 512000
+gap 1, condi 256000, cmp 256000
+gap 2, condi 767928, cmp 767829
+gap 4, condi 1791492, cmp 1790805
+gap 8, condi 3837756, cmp 3834257
+gap 16, condi 7926700, cmp 7911686
+gap 32, condi 16089324, cmp 16029256
+gap 64, condi 32354028, cmp 32116285
+gap 128, condi 64647020, cmp 63731149
+gap 256, condi 128385900, cmp 124901600
+gap 512, condi 252674924, cmp 240180255
+gap 1024, condi 490795884, cmp 449090774
+gap 2048, condi 935873388, cmp 808176259
+gap 4096, condi 1736833900, cmp 1382380691
+gap 8192, condi 3134307180, cmp 2243554998
+gap 16384, condi 5462129516, cmp 3435342868
+gap 32768, condi 9280203628, cmp 5004683295
+gap 65536, condi 15271897964, cmp 6927839435
+gap 131072, condi 24477358956, cmp 9143185132
+gap 262144, condi 38093261676, cmp 11547056837
+77145 added
+Time cost: 232.0294s
+passed
+
+Run Summary:    Type  Total    Ran Passed Failed Inactive
+              suites      1      1    n/a      0        0
+               tests     13     13     13      0        0
+             asserts     13     13     13      0      n/a
+
+Elapsed time =  710.140 seconds
