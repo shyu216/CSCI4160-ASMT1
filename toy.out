@@ -1,0 +1,22 @@
+Type '0' to run a toy testcase; Type a number of '1'~'12' to select a testcase; Type '13' to run all the 13 testcases: 
+
+     CUnit - A unit testing framework for C - Version 2.1-3
+     http://cunit.sourceforge.net/
+
+
+Suite: SUITE
+  Test: toyTestCase ...
+Generating 5-dimension point dataset, number of points in dataset = 20
+3 is gone because of 5
+7 is gone because of 16
+total condi 178, cmp 178
+18 added
+Time cost: 0.0001s
+passed
+
+Run Summary:    Type  Total    Ran Passed Failed Inactive
+              suites      1      0    n/a      0        0
+               tests     13      1      1      0        0
+             asserts      1      1      1      0      n/a
+
+Elapsed time =    0.000 seconds
